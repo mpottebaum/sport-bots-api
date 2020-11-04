@@ -45,3 +45,5 @@ gem "jwt", "~> 2.2"
 
 # Serializers for custom JSON objects
 gem "active_model_serializers", "~> 0.10.10"
+
+gem "faker"

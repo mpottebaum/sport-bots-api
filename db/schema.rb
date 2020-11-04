@@ -10,17 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_201559) do
+ActiveRecord::Schema.define(version: 2020_11_04_231144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "players", force: :cascade do |t|
+  create_table "bots", force: :cascade do |t|
+    t.integer "team_id"
     t.string "name"
-    t.string "type"
     t.integer "speed"
     t.integer "strength"
     t.integer "agility"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "names", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.integer "bot_id"
+    t.integer "roster_id"
+    t.integer "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "rosters", force: :cascade do |t|
+    t.integer "team_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
