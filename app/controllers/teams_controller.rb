@@ -3,7 +3,8 @@ class TeamsController < ApplicationController
         team = Team.create(team_params)
         
         if team.valid?
-            render json: { team: team }, status: 200
+            token = encode_token(team_id: team.id)
+            render json: { team: team, token: token }, status: 200
         else
             render json: { error: 'The name or email you provided are already taken' }, status: 406
         end
