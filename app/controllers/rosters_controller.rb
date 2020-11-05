@@ -1,14 +1,18 @@
 class RostersController < ApplicationController
     def create
         team = Team.find(params[:id])
-        team.players.create(roster_params[:bots])
 
-        render json: { roster: team.roster }, status: 200
+        roster = team.create_roster(roster_params)
+        if roster.valid?
+            render json: { roster: roster }, status: 200
+        else
+            render json: { errors: roster.errors.messages.values }, status: 406
+        end
     end
 
     private
 
     def roster_params
-        params.require(:roster).permit(:bots => [:bot_id, :designation])
+        params.require(:roster).permit(:players_attributes => [:bot_id, :designation])
     end
 end
