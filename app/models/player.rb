@@ -1,4 +1,4 @@
 class Player < ApplicationRecord
-    belongs_to :roster
+    belongs_to :team
     belongs_to :bot
 end

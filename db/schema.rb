@@ -33,14 +33,8 @@ ActiveRecord::Schema.define(version: 2020_11_04_231144) do
 
   create_table "players", force: :cascade do |t|
     t.integer "bot_id"
-    t.integer "roster_id"
-    t.integer "type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "rosters", force: :cascade do |t|
     t.integer "team_id"
+    t.string "designation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -4,7 +4,7 @@ class Team < ApplicationRecord
     validates :email, uniqueness: true
 
     has_many :bots, dependent: :destroy
-    has_many :rosters, dependent: :destroy
+    has_many :players, dependent: :destroy
 
     # Manually runs TeamsSerializer
     # added to remove password_digest and date stamps from JSON responses
@@ -14,14 +14,24 @@ class Team < ApplicationRecord
         ).serializable_hash
     end
 
+    def roster
+        if players.length == 0
+            return nil
+        end
+        players.map do |player|
+            {
+              bot_id: player.bot_id,
+              designation: player.designation
+            }
+        end
+    end
+
     def generate_bots
         Name.all.sample(100).each do |name_record|
-            bots.create({
-                name: name_record.name,
-                speed: rand(1..50),
-                strength: rand(1..50),
-                agility: rand(1..50),
+            bot_data = Bot.generate_attributes.merge({
+                name: name_record.name
             })
+            bots.create(bot_data)
         end
     end
 end
