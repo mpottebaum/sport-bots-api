@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   post '/teams', to: 'teams#create'
 
+  # LOGIN
   post '/auth', to: 'auth#create'
+  # VALIDATE TOKEN
   get '/auth', to: 'auth#show'
+
+  post '/teams/:id/rosters', to: 'rosters#create'
 end
