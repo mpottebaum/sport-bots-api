@@ -29,10 +29,18 @@ class RostersController < ApplicationController
             if update_is_valid
                 render json: { roster: roster, players: team.roster.players}, status: 200
             else
-                render json: { errors: ['Roster update is invalid']}, status: 406
+                render json: {
+                    error: {
+                        messages: ['Roster update is invalid']
+                    }
+                }, status: 406
             end
         else
-            render json: { errors: ['You have not created a roster']}, status: 401
+            render json: {
+                error: {
+                    messages: ['You have not created a roster']
+                }
+            }, status: 401
         end
     end
 
@@ -44,7 +52,11 @@ class RostersController < ApplicationController
             roster.destroy
             render json: { message: 'success' }, status: 200
         else
-            render json: { errors: 'You have not created a roster'}, status: 406
+            render json: {
+                error: {
+                    messages: ['You have not created a roster']
+                }
+            }, status: 406
         end
     end
 
@@ -54,21 +66,3 @@ class RostersController < ApplicationController
         params.require(:roster).permit(:players_attributes => [:bot_id, :designation])
     end
 end
-
-# lib = {}
-# roster_params = {
-#     players_attributes: []
-# }
-# team.bots.each do |bot|
-#     points = bot.attributes_sum
-#     if lib[points]
-#     elsif roster_params[:players_attributes].length >= 15
-#     else
-#         lib[points] = true
-#         designation = roster_params[:players_attributes].length < 10 ? 'starter' : 'alternate'
-#         roster_params[:players_attributes].push({
-#             bot_id: bot.id,
-#             designation: designation
-#         })
-#     end
-# end

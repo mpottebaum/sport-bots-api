@@ -12,7 +12,11 @@ class TeamsController < ApplicationController
             
             render json: team.serialized.merge(token: token), status: 200
         else
-            render json: { errors: ['The name or email you provided are already taken'] }, status: 406
+            render json: {
+                error: {
+                    messages: ['The name or email you provided are already taken']
+                }
+            }, status: 406
         end
     end
 

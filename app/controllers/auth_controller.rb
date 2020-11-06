@@ -7,7 +7,11 @@ class AuthController < ApplicationController
             token = encode_token({team_id: team.id})
             render json: team.serialized.merge(token: token) , status: 200
         else
-            render json: {errors: ['The name or password you provided is incorrect']}, status: 401
+            render json: {
+                error: {
+                    messages: ['The name or password you provided is incorrect']
+                }
+            }, status: 401
         end
     end
 
@@ -17,7 +21,11 @@ class AuthController < ApplicationController
             token = encode_token({team_id: team.id})
             render json: team.serialized, status: 200
         else
-            render json: {errors: ['The token you provided is invalid']}, status: 401
+            render json: {
+                error: {
+                    messages: ['The token you provided is invalid']
+                }
+            }, status: 401
         end
     end
 
