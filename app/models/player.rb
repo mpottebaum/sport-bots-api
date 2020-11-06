@@ -3,7 +3,7 @@ class Player < ApplicationRecord
     belongs_to :roster
     belongs_to :bot
 
-    validate :validate_bot, :validate_roster_length, :validate_roster_designation_counts
+    validate :validate_bot, :validate_roster_length, :validate_roster_designation_counts, on: [:create, :update]
 
     private
 
