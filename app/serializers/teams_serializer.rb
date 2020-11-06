@@ -1,7 +1,3 @@
 class TeamsSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :bots, :roster
-
-  def roster
-    object.roster
-  end
+  attributes :id, :name, :email
 end
