@@ -1,10 +1,21 @@
 class RostersController < ApplicationController
+
+    def random
+        team = Team.find(params[:id])
+        roster = team.generate_roster
+        render json: { roster: roster }, status: 200
+    end
+
     def create
         team = Team.find(params[:id])
 
         roster = team.create_roster(roster_params)
         if roster.valid?
-            render json: { roster: roster, bot_ids: roster.players }, status: 200
+            render json: { roster: {
+                id: roster.id,
+                starters: roster.starters_json,
+                alternates: roster.alternates_json
+            } }, status: 200
         else
             render json: { errors: roster.errors.messages.values }, status: 406
         end
@@ -14,9 +25,13 @@ class RostersController < ApplicationController
         team = Team.find(params[:id])
         roster = team.roster
         if roster
-            render json: { roster: roster, players: roster.players }, status: 200
+            render json: { roster: {
+                id: roster.id,
+                starters: roster.starters_json,
+                alternates: roster.alternates_json
+            }}, status: 200
         else
-            render json: { errors: ['Your team has not created a roster']}, status: 401
+            render json: { roster: {} }, status: 200
         end
     end
 
@@ -27,7 +42,11 @@ class RostersController < ApplicationController
         if roster
             update_is_valid = roster.update_players(roster_params)
             if update_is_valid
-                render json: { roster: roster, players: team.roster.players}, status: 200
+                render json: { roster: {
+                    id: roster.id,
+                    starters: roster.starters_json,
+                    alternates: roster.alternates_json
+                }}, status: 200
             else
                 render json: {
                     error: {

@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       get '/teams/:id/rosters', to: 'rosters#show'
       put '/teams/:id/rosters', to: 'rosters#update'
       delete '/teams/:id/rosters', to: 'rosters#destroy'
+      # RANDOM ROSTER
+      get '/teams/:id/rosters/random', to: 'rosters#random'
     
       # BOTS
       get '/teams/:id/bots', to: 'bots#index'

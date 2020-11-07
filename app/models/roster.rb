@@ -6,12 +6,32 @@ class Roster < ApplicationRecord
 
     validate :validate_roster_count, :validate_designation_counts, :validate_attribute_sums, on: [:create, :update]
 
+    def starters
+        players.filter {|player| player.designation == 'starter'}
+    end
+
+    def alternates
+        players.filter {|player| player.designation == 'alternate'}
+    end
+
     def num_starters
-        players.filter {|player| player.designation == 'starter'}.count
+        starters.count
     end
 
     def num_alternates
-        players.filter {|player| player.designation == 'alternate'}.count
+        alternates.count
+    end
+
+    def starters_json
+        starters.map do |player|
+            player.bot
+        end
+    end
+
+    def alternates_json
+        alternates.map do |player|
+            alternates.bot
+        end
     end
 
     def update_players(roster_params)
