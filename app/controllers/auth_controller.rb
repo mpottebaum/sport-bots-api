@@ -2,7 +2,7 @@ class AuthController < ApplicationController
     skip_before_action :authorized
 
     def create
-        team = Team.find_by(name: auth_params[:name])
+        team = Team.find_by(email: auth_params[:email])
         if team && team.authenticate(auth_params[:password])
             token = encode_token({team_id: team.id})
             render json: team.serialized.merge(token: token) , status: 200
@@ -32,6 +32,6 @@ class AuthController < ApplicationController
     private
 
     def auth_params
-        params.require(:auth).permit(:name, :password)
+        params.require(:team).permit(:email, :password)
     end
 end
