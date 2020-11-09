@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     scope :v1 do
       # TEAM
       post '/teams', to: 'teams#create'
+      put '/teams', to: 'teams#update'
     
       # LOGIN
       post '/auth', to: 'auth#create'

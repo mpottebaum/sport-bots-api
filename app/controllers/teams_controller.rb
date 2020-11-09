@@ -20,6 +20,21 @@ class TeamsController < ApplicationController
         end
     end
 
+    def update
+        team = Team.update(team_params)
+
+        if team.valid?
+            render json: team.serialized, status: 200
+        else
+            render json: {
+                error: {
+                    messages: ['']
+                }
+            }
+        end
+
+    end
+
     private
 
     def team_params
