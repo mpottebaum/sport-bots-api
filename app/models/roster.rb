@@ -30,7 +30,7 @@ class Roster < ApplicationRecord
 
     def alternates_json
         alternates.map do |player|
-            alternates.bot
+            player.bot
         end
     end
 
