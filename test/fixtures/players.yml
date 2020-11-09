@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  bot_id: 1
-  roster_id: 1
+# one:
+#   bot_id: 1
+#   roster_id: 1
 
-two:
-  bot_id: 1
-  roster_id: 1
+# two:
+#   bot_id: 1
+#   roster_id: 1
