@@ -21,14 +21,15 @@ class TeamsController < ApplicationController
     end
 
     def update
-        team = Team.update(team_params)
+        team = Team.find(params[:id])
+        update = team.update(team_params)
 
-        if team.valid?
+        if update
             render json: team.serialized, status: 200
         else
             render json: {
                 error: {
-                    messages: ['']
+                    messages: ['Name or email is already taken']
                 }
             }
         end
