@@ -11,11 +11,13 @@ class RostersController < ApplicationController
 
         roster = team.create_roster(roster_params)
         if roster.valid?
-            render json: { roster: {
-                id: roster.id,
-                starters: roster.starters_json,
-                alternates: roster.alternates_json
-            } }, status: 200
+            render json: team.serialized.merge({
+                    roster: {
+                            id: roster.id,
+                            starters: roster.starters_json,
+                            alternates: roster.alternates_json
+                        }
+            }), status: 200
         else
             render json: { errors: roster.errors.messages.values }, status: 406
         end
@@ -42,11 +44,13 @@ class RostersController < ApplicationController
         if roster
             update_is_valid = roster.update_players(roster_params)
             if update_is_valid
-                render json: { roster: {
-                    id: roster.id,
-                    starters: roster.starters_json,
-                    alternates: roster.alternates_json
-                }}, status: 200
+                render json: team.serialized.merge({
+                    roster: {
+                            id: roster.id,
+                            starters: roster.starters_json,
+                            alternates: roster.alternates_json
+                        }
+            }), status: 200
             else
                 render json: {
                     error: {
@@ -69,11 +73,17 @@ class RostersController < ApplicationController
 
         if roster
             roster.destroy
-            render json: { message: 'success' }, status: 200
+            team.save
+            render json: { team: {
+                id: team.id,
+                name: team.name,
+                email: team.email,
+                saved_roster: false
+            }}, status: 200
         else
             render json: {
                 error: {
-                    messages: ['You have not created a roster']
+                    message: ['You have not created a roster']
                 }
             }, status: 406
         end
