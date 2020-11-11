@@ -9,7 +9,7 @@ class BotsController < ApplicationController
                 error: {
                     messages: ['No team exists with the provided ID']
                 }
-            }, status: 402
+            }, status: 404
         end
     end
 end

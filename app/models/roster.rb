@@ -22,18 +22,22 @@ class Roster < ApplicationRecord
         alternates.count
     end
 
+
+    # created to replace Player records with Bot records in JSON responses
     def starters_json
         starters.map do |player|
             player.bot
         end
     end
 
+    # created to replace Player records with Bot records in JSON responses
     def alternates_json
         alternates.map do |player|
             player.bot
         end
     end
 
+    # created to add Player record IDs to params
     def update_players(roster_params)
         players.each.with_index do |player, i|
             roster_params[:players_attributes][i][:id] = player.id
