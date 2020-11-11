@@ -10,7 +10,7 @@ class AuthController < ApplicationController
         else
             render json: {
                 error: {
-                    messages: ['The name or password you provided is incorrect']
+                    messages: ['The email or password you provided is incorrect']
                 }
             }, status: 401
         end
